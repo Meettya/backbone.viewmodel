@@ -1,0 +1,8 @@
+--compilers coffee:coffee-script
+--require coffee-script
+--require ./test/mocha_helper.coffee
+--reporter spec
+--colors
+--growl
+--ui bdd
+--globals my_package

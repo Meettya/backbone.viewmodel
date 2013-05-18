@@ -1,0 +1,27 @@
+{
+  "name": "backbone.viewmodel",
+  "version": "0.0.1",
+  "description": "Backbone.ViewModel implementation with attributes mapping and synchronization on demand.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "backbone",
+    "vewmodel"
+  ],
+  "author": "Meettya",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "*"
+  },  
+  "devDependencies": {
+    "coffee-script": "*",
+    "backbone": "*",
+    "chai": "*",
+    "mocha": "*",
+    "colors": "*",
+    "cheerio": "*"
+  }
+}
