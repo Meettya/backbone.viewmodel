@@ -4,7 +4,7 @@
   "description": "Backbone.ViewModel implementation with attributes mapping and synchronization on demand.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": "",
   "keywords": [
@@ -14,14 +14,17 @@
   "author": "Meettya",
   "license": "MIT",
   "dependencies": {
-    "lodash": "*"
-  },  
+    "lodash": "*",
+    "backbone": "*"
+  },
   "devDependencies": {
     "coffee-script": "*",
-    "backbone": "*",
     "chai": "*",
     "mocha": "*",
     "colors": "*",
-    "cheerio": "*"
+    "cheerio": "*",
+    "async": "*",
+    "clinch": "*",
+    "fs-extra": "*"
   }
 }

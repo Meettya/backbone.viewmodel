@@ -149,7 +149,7 @@ describe 'Backbone.ViewModel:', ->
 
   describe '#reflect()', ->
 
-    it 'should not update viewmodel attribute without sunc()', ->
+    it 'should not update viewmodel attribute without reflect()', ->
       tObj  = new BB_View_Model_Base bbObj
       bbObj.set 'color', 'blue'
 

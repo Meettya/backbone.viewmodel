@@ -53,7 +53,3 @@ module.exports = class Backbone.ViewModel extends Backbone.Model
 
     res_obj
 
-
-
-
-
