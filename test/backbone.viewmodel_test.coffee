@@ -51,7 +51,10 @@ describe 'Backbone.ViewModel:', ->
 
   class BB_View_Model_Sync extends BB_View_Model_Base
     initialize : ->
-      @model.on 'change', @reflect
+      @model.on 'change', @update
+
+  class BB_View_Model_AutoSync extends BB_View_Model_Base
+    autoupdate : true
 
   beforeEach ->
     bbObj = new BB_Model_Base
@@ -147,9 +150,9 @@ describe 'Backbone.ViewModel:', ->
       expect(tObj.get 'deep').not.to.be.eql bbObj.get 'deep'
       tObj.get('deep').value.should.to.be.false
 
-  describe '#reflect()', ->
+  describe '#update()', ->
 
-    it 'should not update viewmodel attribute without reflect()', ->
+    it 'should not update viewmodel attribute without update()', ->
       tObj  = new BB_View_Model_Base bbObj
       bbObj.set 'color', 'blue'
 
@@ -158,14 +161,14 @@ describe 'Backbone.ViewModel:', ->
     it 'should update viewmodel attribute from view attribute', ->
       tObj  = new BB_View_Model_Base bbObj
       bbObj.set 'color', 'blue'
-      tObj.reflect()
+      tObj.update()
       
       tObj.get('color').should.to.be.eql 'blue'
 
     it 'should update viewmodel attribute with computed property', ->
       tObj  = new BB_View_Model_Base bbObj
       bbObj.set 'size', 100
-      tObj.reflect()
+      tObj.update()
       
       tObj.get('width').should.to.be.eql 100*2
 
@@ -174,7 +177,19 @@ describe 'Backbone.ViewModel:', ->
       bbObj.set 'size', 100
 
       tObj.on 'change', -> done()
-      tObj.reflect()
+      tObj.update()
+
+    it 'should support \'autoupdate\' property in constructor', ->
+      tObj  = new BB_View_Model_Base bbObj, {}, autoupdate : true
+      bbObj.set 'size', 100
+
+      tObj.get('width').should.to.be.eql 100*2
+
+    it 'should support \'autoupdate\' property in ViewModel class', ->
+      tObj  = new BB_View_Model_AutoSync bbObj
+      bbObj.set 'size', 100
+
+      tObj.get('width').should.to.be.eql 100*2
 
   describe 'as BB object', ->
 
@@ -197,7 +212,7 @@ describe 'Backbone.ViewModel:', ->
       my_view_inst = new MyView model : tObj, el : $('#content')
       
       $.html().should.to.be.equal '<div id="content"><span>90</span></div>'
-      # and now change and get autoreflect
+      # and now change and get autoupdate
       bbObj.set 'size', 100
       $.html().should.to.be.equal '<div id="content"><span>200</span></div>'
 
@@ -228,7 +243,7 @@ describe 'Backbone.ViewModel:', ->
       my_collection_inst.get(0).model.set 'size', 100
   
 
-  describe 'should support some BB.Model methods', ->
+  describe 'should support some BB.Model methods (and other works too)', ->
 
     it '#toJSON()', ->
       tObj  = new BB_View_Model_Sync bbObj

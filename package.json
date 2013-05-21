@@ -1,15 +1,15 @@
 {
   "name": "backbone.viewmodel",
-  "version": "0.0.1",
-  "description": "Backbone.ViewModel implementation with attributes mapping and synchronization on demand.",
-  "main": "index.js",
+  "version": "0.0.7",
+  "description": "Backbone.ViewModel implementation with attributes mapping and agile synchronization.",
+  "main": "./lib/backbone.viewmodel.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": "",
   "keywords": [
     "backbone",
-    "vewmodel"
+    "viewmodel"
   ],
   "author": "Meettya",
   "license": "MIT",

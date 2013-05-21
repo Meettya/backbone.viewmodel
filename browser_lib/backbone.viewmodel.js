@@ -27,7 +27,7 @@ require = function(name, parent) {
   });
   return (_ref = module.exports) != null ? _ref : exports;
 };
-  dependencies = {"1188771396":{"backbone":3339915730,"lodash":1154215551}};
+  dependencies = {"1894737063":{"backbone":3339915730,"lodash":1154215551}};
   sources = {
 "1154215551": function(exports, module, require) {
 // /Users/meettya/github/backbone.viewmodel/web_modules/lodash.coffee 
@@ -36,7 +36,7 @@ This is lodash shim
 */
 module.exports = this._;
 },
-"1188771396": function(exports, module, require) {
+"1894737063": function(exports, module, require) {
 // /Users/meettya/github/backbone.viewmodel/src/backbone.viewmodel.coffee 
 /*
 This is Backbone.ViewModel implementation with attributes mapping and synchronization on demand.
@@ -54,19 +54,22 @@ _ = require('lodash');
 module.exports = Backbone.ViewModel = (function(_super) {
   __extends(ViewModel, _super);
 
-  function ViewModel(model, constructor_attrs, options) {
+  function ViewModel(model, constructor_attrs, _options_) {
     this.model = model;
     if (constructor_attrs == null) {
       constructor_attrs = {};
     }
-    this.options = options;
-    this.reflect = __bind(this.reflect, this);
+    this._options_ = _options_ != null ? _options_ : {};
+    this.update = __bind(this.update, this);
     if (!this.model) {
-      throw Error("model required");
+      throw Error("model required, but got |" + this.model + "|");
     }
     ViewModel.__super__.constructor.call(this, constructor_attrs);
     this._mapping_dictionary_ = this._buildMappingDictionary() || {};
-    this._synchronizeWithModel();
+    if (this._options_.autoupdate || this.autoupdate) {
+      this.model.on('change', this.update);
+    }
+    this.update();
   }
 
   /*
@@ -74,7 +77,7 @@ module.exports = Backbone.ViewModel = (function(_super) {
   */
 
 
-  ViewModel.prototype.reflect = function() {
+  ViewModel.prototype.update = function() {
     return this._synchronizeWithModel();
   };
 
@@ -105,7 +108,7 @@ module.exports = Backbone.ViewModel = (function(_super) {
       _this = this;
 
     if (this.mapping == null) {
-      return;
+      return null;
     }
     res_obj = {};
     _ref = this.mapping;
@@ -146,5 +149,5 @@ This is Backbone shim
 module.exports = this.Backbone;
 }};
 /* bundle export */
-this.Backbone.Viewmodel = require(1188771396)
+this.Backbone.Viewmodel = require(1894737063)
 }).call(this);

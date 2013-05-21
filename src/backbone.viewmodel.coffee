@@ -8,20 +8,23 @@ _         = require 'lodash'
 
 module.exports = class Backbone.ViewModel extends Backbone.Model
 
-  constructor: (@model, constructor_attrs={}, @options) ->
-    throw Error "model required" unless @model
-    # call to parent, but empty object will be used
+  constructor: (@model, constructor_attrs={}, @_options_={}) ->
+    throw Error "model required, but got |#{@model}|" unless @model
     super constructor_attrs
 
     # oh! its little smart thingy for synchronization :)
     @_mapping_dictionary_ = @_buildMappingDictionary() || {}
 
-    @_synchronizeWithModel()
+    # add autoupdate options
+    if @_options_.autoupdate || @autoupdate
+      @model.on 'change', @update
+
+    @update()
 
   ###
   Public API for synchronization VM with Model
   ###
-  reflect : => @_synchronizeWithModel()    
+  update : => @_synchronizeWithModel()    
 
   ###
   This method will synchronize ViewModel data with Model data
@@ -34,7 +37,7 @@ module.exports = class Backbone.ViewModel extends Backbone.Model
   This method build mapping dictionary with pre-fired function
   ###
   _buildMappingDictionary : ->
-    return unless @mapping?
+    return null unless @mapping?
 
     res_obj = {}
     for self_attr, data_source of @mapping
