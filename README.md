@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/Meettya/backbone.viewmodel.png)](http://travis-ci.org/Meettya/backbone.viewmodel)  [![Dependency Status](https://gemnasium.com/Meettya/backbone.viewmodel.png)](https://gemnasium.com/Meettya/backbone.viewmodel)
+
 # Backbone.ViewModel
 
 Yes, YA Backbone.ViewModel here! Because we are can! :)
