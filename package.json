@@ -1,0 +1,36 @@
+{
+  "name": "backbone.viewmodel",
+  "version": "0.0.9",
+  "description": "Backbone.ViewModel implementation with attributes mapping and agile synchronization.",
+  "main": "./lib/backbone.viewmodel.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Meettya/backbone.viewmodel.git"
+  },
+  "keywords": [
+    "backbone",
+    "viewmodel"
+  ],
+  "author": "Meettya",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "*",
+    "backbone": "*"
+  },
+  "devDependencies": {
+    "coffee-script": "*",
+    "chai": "*",
+    "mocha": "*",
+    "colors": "*",
+    "cheerio": "*",
+    "async": "*",
+    "clinch": "*",
+    "fs-extra": "*"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  }
+}
