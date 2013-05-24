@@ -1,12 +1,15 @@
 {
   "name": "backbone.viewmodel",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Backbone.ViewModel implementation with attributes mapping and agile synchronization.",
   "main": "./lib/backbone.viewmodel.js",
   "scripts": {
     "test": "mocha"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Meettya/backbone.viewmodel.git"
+  },
   "keywords": [
     "backbone",
     "viewmodel"
@@ -26,5 +29,8 @@
     "async": "*",
     "clinch": "*",
     "fs-extra": "*"
+  },
+  "engines": {
+    "node": ">=0.6.0"
   }
 }
