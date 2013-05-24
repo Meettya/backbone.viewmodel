@@ -27,16 +27,9 @@ require = function(name, parent) {
   });
   return (_ref = module.exports) != null ? _ref : exports;
 };
-  dependencies = {"1894737063":{"backbone":3339915730,"lodash":1154215551}};
+  dependencies = {"1093359753":{"backbone":3339915730,"lodash":1154215551}};
   sources = {
-"1154215551": function(exports, module, require) {
-// /Users/meettya/github/backbone.viewmodel/web_modules/lodash.coffee 
-/*
-This is lodash shim
-*/
-module.exports = this._;
-},
-"1894737063": function(exports, module, require) {
+"1093359753": function(exports, module, require) {
 // /Users/meettya/github/backbone.viewmodel/src/backbone.viewmodel.coffee 
 /*
 This is Backbone.ViewModel implementation with attributes mapping and synchronization on demand.
@@ -54,16 +47,16 @@ _ = require('lodash');
 module.exports = Backbone.ViewModel = (function(_super) {
   __extends(ViewModel, _super);
 
-  function ViewModel(model, constructor_attrs, _options_) {
-    this.model = model;
+  function ViewModel(data_in, constructor_attrs, _options_) {
     if (constructor_attrs == null) {
       constructor_attrs = {};
     }
     this._options_ = _options_ != null ? _options_ : {};
     this.update = __bind(this.update, this);
-    if (!this.model) {
-      throw Error("model required, but got |" + this.model + "|");
+    if (!data_in) {
+      throw Error("model or raw data required, but got |" + data_in + "|");
     }
+    this.model = data_in instanceof Backbone.Model ? data_in : this._createModelFromRawData(data_in);
     ViewModel.__super__.constructor.call(this, constructor_attrs);
     this._mapping_dictionary_ = this._buildMappingDictionary() || {};
     if (this._options_.autoupdate || this.autoupdate) {
@@ -83,6 +76,8 @@ module.exports = Backbone.ViewModel = (function(_super) {
 
   /*
   This method will synchronize ViewModel data with Model data
+  NB we are can't to do lazy re-load with @model.changedAttributes
+  because keys in _mapping_dictionary_ not one-to-one mapped to model properties
   */
 
 
@@ -137,9 +132,28 @@ module.exports = Backbone.ViewModel = (function(_super) {
     return res_obj;
   };
 
+  /*
+  This method will create model if we are got raw data
+  */
+
+
+  ViewModel.prototype._createModelFromRawData = function(raw_data) {
+    var constructor;
+
+    constructor = this.constructor.prototype.model == null ? Backbone.Model : this.constructor.prototype.model;
+    return new constructor(raw_data);
+  };
+
   return ViewModel;
 
 })(Backbone.Model);
+},
+"1154215551": function(exports, module, require) {
+// /Users/meettya/github/backbone.viewmodel/web_modules/lodash.coffee 
+/*
+This is lodash shim
+*/
+module.exports = this._;
 },
 "3339915730": function(exports, module, require) {
 // /Users/meettya/github/backbone.viewmodel/web_modules/backbone.coffee 
@@ -149,5 +163,5 @@ This is Backbone shim
 module.exports = this.Backbone;
 }};
 /* bundle export */
-this.Backbone.Viewmodel = require(1894737063)
+this.Backbone.Viewmodel = require(1093359753)
 }).call(this);

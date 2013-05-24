@@ -8,8 +8,15 @@ _         = require 'lodash'
 
 module.exports = class Backbone.ViewModel extends Backbone.Model
 
-  constructor: (@model, constructor_attrs={}, @_options_={}) ->
-    throw Error "model required, but got |#{@model}|" unless @model
+  constructor: (data_in, constructor_attrs={}, @_options_={}) ->
+    throw Error "model or raw data required, but got |#{data_in}|" unless data_in
+
+    # suppose all our model are BB.Model instances, may be its wrong
+    # but I don't known how decide is it whole Model or just raw data
+    # futures detection stinks too
+    @model =  if data_in instanceof Backbone.Model then data_in \
+                else @_createModelFromRawData data_in
+    
     super constructor_attrs
 
     # oh! its little smart thingy for synchronization :)
@@ -28,6 +35,8 @@ module.exports = class Backbone.ViewModel extends Backbone.Model
 
   ###
   This method will synchronize ViewModel data with Model data
+  NB we are can't to do lazy re-load with @model.changedAttributes
+  because keys in _mapping_dictionary_ not one-to-one mapped to model properties
   ###
   _synchronizeWithModel : ->
     for self_attr, data_source_fn of @_mapping_dictionary_
@@ -55,4 +64,18 @@ module.exports = class Backbone.ViewModel extends Backbone.Model
       null
 
     res_obj
+
+  ###
+  This method will create model if we are got raw data
+  ###
+  _createModelFromRawData : (raw_data) ->
+    constructor = unless @constructor::model?
+      Backbone.Model
+    else
+      @constructor::model
+
+    new constructor raw_data
+
+
+
 

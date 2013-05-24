@@ -39,6 +39,9 @@ describe 'Backbone.ViewModel:', ->
     defaults : 
       bb_model_defaults
 
+    getSize : ->
+      @get 'size'
+
   class BB_View_Model_Base extends Backbone.ViewModel
     defaults : 
       bb_view_model_defaults
@@ -54,7 +57,10 @@ describe 'Backbone.ViewModel:', ->
       @model.on 'change', @update
 
   class BB_View_Model_AutoSync extends BB_View_Model_Base
-    autoupdate : true
+    autoupdate : on
+
+  class BB_View_Model_Ench extends BB_View_Model_AutoSync
+    model : BB_Model_Base
 
   beforeEach ->
     bbObj = new BB_Model_Base
@@ -68,7 +74,7 @@ describe 'Backbone.ViewModel:', ->
       tObj.should.to.be.an.instanceof Backbone.ViewModel
 
     it 'should throw error if model as first argument is missed', ->
-      expect(-> new BB_View_Model_Base).to.throw /model required/
+      expect(-> new BB_View_Model_Base).to.throw /model or raw data required/
 
     it 'should use default properties (as BB model)', ->
       tObj  = new BB_View_Model_Base bbObj
@@ -87,6 +93,20 @@ describe 'Backbone.ViewModel:', ->
     it 'should always overwrite any attr properties with mapped one', ->
       tObj  = new BB_View_Model_Base bbObj, constructor_options
       expect(tObj.get 'width').to.be.equal bb_model_defaults.size * 2
+
+    it 'should be create object with raw data if \'model\' property exist', ->
+      tObj  = new BB_View_Model_Ench bb_model_defaults
+
+      expect(tObj.get 'color').to.be.equal bb_model_defaults.color
+      expect(tObj.get 'width').to.be.equal bb_model_defaults.size * 2
+      expect(tObj.model.getSize()).to.be.equal bb_model_defaults.size
+
+    it 'should be create object with base Backbone.Model if raw data passed but \'model\' property omitted', ->
+      tObj  = new BB_View_Model_Base bb_model_defaults
+
+      expect(tObj.get 'color').to.be.equal bb_model_defaults.color
+      expect(tObj.get 'width').to.be.equal bb_model_defaults.size * 2
+      expect(-> tObj.model.getSize()).to.throw /has no method/
 
   describe 'mapping (class property)', ->
 
