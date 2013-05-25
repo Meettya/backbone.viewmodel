@@ -4,7 +4,8 @@
 
 Yes, YA Backbone.ViewModel here! Because we are can! :)
 
-Actually I need solutions to link two different Views on base of one Model and ViewModel is matter. See example project for more details.
+Actually I need solutions to link two different Views on base of one Model and ViewModel is matter.
+For mode details and examples see [demo project](https://github.com/Meettya/colorbox) and [live result](http://meettya.github.io/colorbox/index.html).
 
 ## Description:
 
@@ -51,21 +52,15 @@ How its works:
 
 ### Properties:
 
-    ###
-    model prop may be used to create specific Model from raw data,
-    by default VM use Backbone.Model
-    ###
-    model       : BaseBB.Model
-    ###
-    VM do not auto-update itself properties on model changes
-    use this knob to turn it on
-    ###
-    autoupdate  : on
+    # model prop may be used to create specific Model from raw data
+    model       : BaseBB.Model  # default Backbone.Model
+    #track model changes and auto-update self state
+    autoupdate  : on            # default off
     ###
     all keys in mapping will be 'mapped' self VM functions OR
     model attributes, with priority: function, than attributes
     ###
-    mapping : 
+    mapping :                   # default {}
       color   : 'color'
       height  : 'getHeight'
 
@@ -79,11 +74,11 @@ How its works:
 
 #### update()
 
-Just proceed process to update VM from current model state. May be called if `autoupdate` property not used for some reason.
+Just proceed process to update VM from current model state. May be called if `autoupdate` property not used for any reason.
 
 ### BB.Model methods
 
-**Backbone.ViewModel** as BB.Model will support much helpfully methods like `toJSON()` or `get()`, dozen unsuitably methods like `set()` `unset()` or `clear()` and (at now) will available to call erroneously methods like `fetch()` or `sync()` - just do not use them.
+**Backbone.ViewModel** as BB.Model will support some helpfully methods like `toJSON()` or `get()`, dozen unsuitably methods like `set()` `unset()` or `clear()` and (at now) will available to call erroneously methods like `fetch()` or `sync()` - just do not use them.
 
 If you need to have synced model  - create it first and use thyself methods in ViewModel `update` or `autoupdate` combinations.
 
